@@ -16,19 +16,21 @@ description: Créer un jeu vidéo jouable dans le navigateur (ordi + mobile) san
 3. Style visuel : pixel art · formes simples colorées · dessin.
 4. Durée d'une partie : 1 min · 5 min · plus.
 5. La règle unique en 1 phrase (« sauter de toit en toit sans tomber »).
-Écris un mini document de jeu de 10 lignes dans `~/Documents/Projets-Claude/<jeu>/JEU.md` (but, contrôles, victoire, défaite, score). Montre-le, attends l'OK.
+Écris un mini document de jeu de 10 lignes dans `JEU.md` (dans le dossier courant s'il est vide ou déjà dédié au jeu, sinon dans un nouveau dossier `Projets-Claude/<jeu>/`) : but, contrôles, victoire, défaite, score. Montre-le, attends l'OK.
 
 ## Étape 2 : prototype jouable (même session)
 - Dossier simple, sans outil de compilation : `index.html`, `src/` (un fichier par scène), `assets/`.
 - Petit jeu : canvas pur. Jeu avec physique ou beaucoup de sprites : Phaser 3 téléchargé dans `lib/` (pas de lien externe, le jeu doit marcher hors ligne et sur itch.io).
 - Formes de couleur d'abord (greybox). Seulement la boucle centrale : bouger, l'obstacle, perdre, recommencer.
-- Lance un serveur local (`npx --yes http-server -p 8080 -c-1`) et donne le lien à ouvrir.
+- Lance un serveur local **en arrière-plan** (`npx --yes http-server -p 8080 -c-1`, sans bloquer la conversation) et donne le lien http://localhost:8080 à ouvrir.
 
 ## Étape 3 : test automatique (avant de dire « ça marche »)
-Avec le skill `webapp-testing` (Playwright) :
-- Charge la page, 0 erreur dans la console, capture d'écran ordi (1280×720) et téléphone (iPhone en émulation).
-- Simule 10 secondes de touches, vérifie que l'état change (score, position) et que « rejouer » remet tout à zéro.
-Montre les 2 captures. Corrige jusqu'à 0 erreur.
+Avec l'outil de capture du kit (Node + le Chrome ou Edge déjà installé, pas besoin de Python) :
+- `node <skills>/clone-site/scripts/capture.mjs http://localhost:8080 ./tests --nom jeu` où `<skills>` = `~/.claude/skills` (abonnés Claude : `~/.claude-gratuit/skills`). Ça produit `jeu-desktop.png`, `jeu-mobile.png` et `jeu-console.txt`.
+- `jeu-console.txt` doit être vide d'erreurs. Montre les 2 captures.
+- Pour simuler des touches (10 secondes de jeu, vérifier que le score bouge et que « rejouer » remet à zéro) : petit script `tests/jouer.mjs` avec `playwright-core` (déjà installé dans `<skills>/clone-site/scripts/node_modules`), navigateur `channel: 'chrome'` ou `'msedge'`.
+- Sur un serveur sans navigateur : saute les captures et teste la logique du jeu avec Node.
+Corrige jusqu'à 0 erreur. (Le skill `webapp-testing` marche aussi si Python et Playwright sont installés.)
 
 ## Étape 4 : le rendre bon (juice)
 Sons (saut, impact, score), particules, petit tremblement d'écran à l'impact, transitions, écran titre, pause, meilleur score sauvegardé (`localStorage`), difficulté qui monte doucement. Un ajout à la fois, test entre chaque.

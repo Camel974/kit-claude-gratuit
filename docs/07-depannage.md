@@ -22,7 +22,7 @@ Exemple de rapport (installation réelle, 18/11/2026) :
 |---|---|---|
 | Windows : « Windows a protégé votre ordinateur » | fichier téléchargé d'Internet | Informations complémentaires → Exécuter quand même |
 | Windows : « l'exécution de scripts est désactivée » | règle PowerShell | passe par `DEMARRER-WINDOWS.bat` (il contourne la règle pour ce script seulement) |
-| Mac : « impossible d'ouvrir car le développeur ne peut pas être vérifié » | Gatekeeper | clic droit → Ouvrir → Ouvrir, ou la ligne `curl ... \| bash` dans le Terminal |
+| Mac : « impossible d'ouvrir car le développeur ne peut pas être vérifié » | Gatekeeper | Réglages Système → Confidentialité et sécurité → « Ouvrir quand même » (avant macOS 15 : clic droit → Ouvrir) ; ou la ligne `curl ... \| bash` dans le Terminal (jamais bloquée) |
 | Lignes jaunes `npm warn ERESOLVE ...` | avertissements de dépendances | **normal**, attends la fin (doc officielle OmniRoute) |
 | « Lance ce script SANS sudo » | `sudo bash installer.sh` | relance sans `sudo` |
 | `curl: (23) Failure writing output` | ancienne version du script | télécharge la dernière version du kit (corrigé le 18/11/2026) |
@@ -44,7 +44,8 @@ Exemple de rapport (installation réelle, 18/11/2026) :
 ## Pendant le travail
 | Symptôme | Cause | Solution |
 |---|---|---|
-| `ECONNREFUSED 127.0.0.1:20128`, « Unable to connect » | OmniRoute arrêté | `omniroute serve --no-open` (laisse la fenêtre ouverte), ou redémarre l'ordi |
+| `ECONNREFUSED 127.0.0.1:20128`, « Unable to connect » | OmniRoute arrêté | `kit-claude demarrer` (serveur root : `systemctl restart omniroute`) |
+| Windows : `omniroute` → « l'exécution de scripts est désactivée » | PowerShell bloque les scripts `.ps1` créés par npm | utilise les commandes `kit-claude ...` (elles passent par Node, pas par PowerShell) |
 | `401` / « invalid api key » | clé Claude ↔ OmniRoute changée | relance l'installeur (il recrée la clé). La clé de Claude Code se voit dans le tableau de bord → Gestionnaire d'API ([capture](images/09-cle-api.png)) |
 | Une connexion affiche « Invalid API Key » en rouge dans le tableau de bord | clé du fournisseur mal copiée | recopie-la : `kit-claude ajouter-cle` ([capture](images/10-cle-invalide.png)) |
 | `429` / « rate limit » / « quota » | quota du moment épuisé | attends 1 minute ; ajoute un 2e fournisseur pour la bascule |
@@ -52,7 +53,11 @@ Exemple de rapport (installation réelle, 18/11/2026) :
 | Réponses très lentes | modèle gratuit chargé | `/compact`, ou `claude --model groq/openai/gpt-oss-120b` |
 | « prompt is too long » | contexte trop gros pour le modèle | `/compact` ; si ça revient : `"CLAUDE_CODE_MAX_CONTEXT_TOKENS": "64000"` dans `~/.claude/settings.json` |
 | Claude rate ses modifications, tourne en rond | modèle trop faible pour la tâche | découpe la tâche, mets Mistral Large en premier (tableau de bord → Combinaisons) |
-| Mot de passe du tableau de bord oublié | | `omniroute-reset-password` |
+| Mot de passe du tableau de bord oublié | | `kit-claude mot-de-passe` |
+| `claude-gratuit` parle d'authentification ou propose `/logout` | abonnement Claude + mode gratuit | **ne fais jamais `/logout`** : ignore le message |
+| Je ne trouve pas mon dossier Projets-Claude | Documents redirigé vers OneDrive | double-clic sur « Claude Gratuit » (Bureau) ; `kit-claude diagnostic` affiche le chemin |
+| Serveur : Claude s'arrête quand la connexion SSH coupe | session fermée | `tmux new -A -s claude` avant `claude` ; après une coupure, retape-le |
+| Serveur : `claude` ou `kit-claude` « command not found » après reconnexion | PATH | reconnecte-toi ; sinon `export PATH="$HOME/.local/bin:$PATH"` puis relance l'installeur |
 
 ## Remettre à zéro proprement
 ```bash

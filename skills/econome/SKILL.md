@@ -19,12 +19,12 @@ description: Économiser les tokens et les quotas gratuits avec Claude Code + Om
 4. **Cible les fichiers** : « modifie le bouton dans `src/hero.html` » plutôt que « regarde mon projet ».
 5. **Pas de gros copier-coller** : donne le chemin du fichier ou les 20 lignes utiles d'une erreur.
 6. **`/context`** montre ce qui remplit la mémoire. **CLAUDE.md court** : il est envoyé à chaque message.
-7. **Skills inutiles hors ligne** : déplace un dossier de `~/.claude/skills/` vers `~/.claude/skills-off/` (réversible).
+7. **Skills inutiles hors ligne** : déplace un dossier de `~/.claude/skills/` (abonnés Claude : `~/.claude-gratuit/skills/`) vers un dossier `skills-off/` à côté (réversible).
 8. **Pas de sous-agents pour des petites tâches** : chacun repaie le contexte de départ.
 
 ## Choisir le modèle
 - Par défaut : `gratuit` (la combinaison OmniRoute qui bascule toute seule d'un fournisseur à l'autre).
-- Forcer un modèle pour une session : `claude --model mistral/mistral-large-latest` (ou un id vu dans le tableau de bord, page Fournisseurs).
+- Forcer un modèle pour une session : `claude --model mistral/mistral-large-latest` (abonnés Claude : `claude-gratuit --model ...`), ou un id vu dans le tableau de bord, page Fournisseurs.
 - Rapide : un modèle Groq ou NVIDIA. Gros contexte (gros fichiers, longs documents) : Gemini. Qualité de code : Mistral Large / Medium.
 - Changer l'ordre de la bascule : tableau de bord `http://127.0.0.1:20128` → Combinaisons → `gratuit`.
 

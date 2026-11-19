@@ -15,9 +15,10 @@ Tu tournes via OmniRoute sur des modèles gratuits (Mistral, NVIDIA, Gemini...),
 - Tâche longue : plan en 3 à 5 étapes, durée estimée, puis étape par étape. Gros livrable : montre un échantillon d'abord.
 - Lis seulement les fichiers utiles (recherche ciblée), jamais un dossier entier. Ne relis pas un fichier que tu viens d'écrire.
 - Vérifie avant de dire « c'est fait » : lance, teste, capture d'écran pour un site ou un jeu.
-- Mes projets vont dans `~/Documents/Projets-Claude/<nom-du-projet>/`.
+- Mes projets vont dans le dossier `Projets-Claude` créé par le kit (dans mes Documents), un sous-dossier par projet.
 - Jamais de clé API ni de mot de passe dans le chat, le code ou un fichier du projet (utilise un `.env` ignoré par git).
 - Rien n'est publié, payé ou envoyé sans mon OK.
+- Commande destructrice (rm -rf, effacer une base, `docker ... down -v`, formatage, toucher hors de mes projets) : demande mon OK pour CETTE commande, même si une permission existe.
 
 ### Économie de tokens (quotas gratuits)
 - Une conversation = un sujet. Sujet terminé : propose `/clear`. Conversation longue : propose `/compact`.

@@ -11,7 +11,7 @@ Installation en 1 double-clic · Windows, Mac, Linux, serveur · 0 € · par **
 
 </div>
 
-> 🎬 La vidéo arrive bientôt. En attendant, tout est ici, **testé en vrai le 18/11/2026** sur une machine vierge (Claude Code 2.1.327, OmniRoute 3.8.54, Node.js 26).
+> 🎬 La vidéo arrive bientôt. En attendant, tout est ici, **testé en vrai le 18/11/2026** sur 4 comptes Linux vierges (Claude Code 2.1.327, OmniRoute 3.8.54, Node.js 26). Windows et Mac : scripts vérifiés (analyse PowerShell 5.1, shellcheck), premier vrai test à faire : dis-nous si ça bloque.
 
 ---
 
@@ -21,21 +21,21 @@ Installation en 1 double-clic · Windows, Mac, Linux, serveur · 0 € · par **
 |---|---|---|
 | **1** | **Crée 1 clé gratuite** : [Mistral](https://console.mistral.ai/api-keys) (recommandé), puis [NVIDIA](https://build.nvidia.com/settings/api-keys) et [Gemini](https://aistudio.google.com/apikey) en secours. [Pas à pas avec captures →](docs/04-cles-gratuites.md) | 2 min par clé |
 | **2** | **Installe** selon ton cas (tableau ci-dessous) et réponds aux questions | 10 à 15 min |
-| **3** | **Utilise** : nouveau terminal → `cd Documents/Projets-Claude` → `claude` → tape `/bienvenue-gratuit` | 1 min |
+| **3** | **Utilise** : double-clic sur **« Claude Gratuit »** (raccourci créé sur ton Bureau) → tape `/bienvenue-gratuit`. Abonné Claude Pro/Max : `claude` reste ton abonnement, `claude-gratuit` = le gratuit | 1 min |
 
 ## 📥 Étape 2 : installe selon ton cas
 
 | Ton cas | Fais ça |
 |---|---|
 | 🖥️ **Tu as un serveur** (VPS, NAS) : *le meilleur choix* | `ssh root@IP-DU-SERVEUR` puis colle :<br>`curl -fsSL https://raw.githubusercontent.com/Camel974/kit-claude-gratuit/main/installer.sh \| bash -s -- --serveur`<br>[Guide serveur →](docs/03-installation-serveur.md) |
-| 🪟 **Windows 10 / 11** | [Télécharge le zip](https://github.com/Camel974/kit-claude-gratuit/archive/refs/heads/main.zip), dézippe, double-clic sur **`DEMARRER-WINDOWS.bat`** |
-| 🍎 **Mac** | Télécharge le zip, dézippe, **clic droit → Ouvrir** sur **`DEMARRER-MAC.command`** |
+| 🪟 **Windows 10 / 11** | [Télécharge le zip](https://github.com/Camel974/kit-claude-gratuit/archive/refs/heads/main.zip), dézippe, double-clic sur **`DEMARRER-WINDOWS.bat`**. « Installer Git ? » → Entrée puis Oui. |
+| 🍎 **Mac** | App **Terminal** → colle `curl -fsSL https://raw.githubusercontent.com/Camel974/kit-claude-gratuit/main/installer.sh \| bash`<br>(ou double-clic sur `DEMARRER-MAC.command` ; si macOS bloque : Réglages Système → Confidentialité et sécurité → « Ouvrir quand même ») |
 | 🐧 **Linux** | `bash installer.sh` dans le dossier du kit |
-| ⚡ **Une seule ligne, sans zip** | PowerShell : `irm https://raw.githubusercontent.com/Camel974/kit-claude-gratuit/main/scripts/installer-windows.ps1 \| iex`<br>Terminal Mac/Linux : `curl -fsSL https://raw.githubusercontent.com/Camel974/kit-claude-gratuit/main/installer.sh \| bash` |
+| ⚡ **Windows en une ligne, sans zip** | PowerShell : `irm https://raw.githubusercontent.com/Camel974/kit-claude-gratuit/main/scripts/installer-windows.ps1 \| iex` |
 | 🤖 **Tu veux qu'une IA te guide** | Sur [claude.ai](https://claude.ai) (gratuit) : joins [`GUIDE-POUR-CLAUDE.md`](GUIDE-POUR-CLAUDE.md) et colle le texte de [`PROMPT-POUR-CLAUDE-GRATUIT.txt`](PROMPT-POUR-CLAUDE-GRATUIT.txt) |
-| 💳 **Tu as déjà Claude Pro / Max** | Installe pareil et réponds « oui » à la question de l'abonnement : `claude` = ton abonnement, `claude-gratuit` = le secours gratuit |
+| 💳 **Tu as déjà Claude Pro / Max** | Installe pareil et réponds **« o »** à la question de l'abonnement (proposé par défaut si tu es déjà connecté) : `claude` = ton abonnement **intact**, `claude-gratuit` = le secours gratuit dans un profil séparé (`~/.claude-gratuit`). Limite atteinte : `/exit` puis `claude-gratuit -c` |
 
-Guide détaillé PC : [docs/02-installation-pc.md](docs/02-installation-pc.md). Le script n'a **pas besoin des droits administrateur** et ne supprime rien (sauvegarde automatique).
+Guide détaillé PC : [docs/02-installation-pc.md](docs/02-installation-pc.md). Il faut **5 Go libres** (OmniRoute pèse 3 Go, mesuré). Le script n'a **pas besoin des droits administrateur** (sauf Git pour Windows, optionnel) et ne supprime rien (sauvegarde automatique).
 
 ## 🔧 Comment ça marche
 
@@ -53,7 +53,7 @@ flowchart LR
 
 ## 📸 En images
 
-| Installation (vraie sortie, machine vierge : la clé Mistral était fausse exprès pour tester la bascule) | Tableau de bord OmniRoute (en français) |
+| Installation (vraie sortie : relance avec une clé Mistral fausse exprès, la bascule passe au suivant) | Tableau de bord OmniRoute (en français) |
 |---|---|
 | <img src="docs/images/06-installation-terminal.png" alt="Installation dans le terminal"> | <img src="docs/images/02-accueil.png" alt="Accueil du tableau de bord OmniRoute"> |
 | **Tes fournisseurs gratuits** | **La bascule automatique « gratuit »** |
@@ -65,14 +65,18 @@ flowchart LR
 
 | Test | Résultat |
 |---|---|
-| Installation complète sur un compte vierge (sans Node, sans Claude) | ✅ Node 26.13.1 + Claude Code 2.1.327 + OmniRoute 3.8.54 + config, en ~3 min |
-| Relance de l'installeur (mise à jour) | ✅ 10 secondes, rien de cassé |
+| Installation complète sur un compte vierge (sans Node, sans Claude) | ✅ Node 26.13.1 + Claude Code 2.1.327 + OmniRoute 3.8.54 + config, en 159 secondes (4 comptes Linux vierges testés) |
+| Relance de l'installeur, désinstallation, réinstallation | ✅ 8 à 10 secondes, rien de cassé, sauvegardes gardées |
+| Mauvaise clé | ✅ détectée en 8 secondes avec la raison exacte (« 401 ») et la commande pour corriger |
 | Claude Code → OmniRoute → fournisseur | ✅ réponse reçue, aucun écran de connexion Anthropic |
 | 1er fournisseur refusé (clé invalide) | ✅ bascule automatique sur le suivant, réponse en 2 s |
 | Sécurité : requête sans clé / écoute réseau | ✅ refusée (401) / OmniRoute écoute seulement 127.0.0.1 |
+| Windows et Mac sur un vrai PC | ⏳ scripts vérifiés (PowerShell 5.1, shellcheck), pas encore lancés sur un vrai PC : retours bienvenus |
 | Fournisseurs « sans clé » (Pollinations, UncloseAI) | ❌ ils exigent une clé aujourd'hui : **1 clé gratuite minimum** |
 | Coût fixe d'un message Claude Code | ~14 000 tokens (d'où le skill `econome`) |
-| 3 bugs trouvés par les simulations | ✅ corrigés avant publication (téléchargement de Node, lecture du CLI, affichage) |
+| 6 bugs trouvés par les simulations | ✅ corrigés (téléchargement de Node, lecture du CLI, catalogue pas prêt, PATH de npm à la mise à jour, démarrage auto non vérifié, affichage) |
+| 3 relectures par des élèves simulés | Windows débutante (4/10), serveur VPS root + n8n (5/10), Mac + Claude Pro (4/10) → plus de 30 corrections intégrées (raccourci Bureau, profil séparé pour les abonnés, tmux, OneDrive, commandes `kit-claude`...) |
+| Abonné Claude Pro : `claude` payant | ✅ intact : le mode gratuit vit dans un profil séparé (`CLAUDE_CONFIG_DIR`, testé) |
 
 ## 🧰 Ce que le kit installe
 
@@ -80,7 +84,8 @@ flowchart LR
 - **La bascule `gratuit`** : Mistral → NVIDIA → Gemini → Groq → OpenRouter (selon tes clés).
 - **18 skills** : `site-express`, `clone-site`, `fusion-sites`, `audit-site`, `design-premium`, `simulation-visiteurs`, `app-web`, `supabase` (kit Sites de Brennan) · `jeu-express` (jeux vidéo) · `bienvenue-gratuit`, `econome`, `depannage-gratuit` · `frontend-design`, `webapp-testing`, `skill-creator` (Anthropic) · `cro`, `copywriting`, `web-quality-audit` (libres).
 - **Des règles « mode gratuit »** dans `~/.claude/CLAUDE.md` : français, réponses courtes, vérifications, économie de tokens.
-- **2 commandes** : `claude-gratuit` (Claude via OmniRoute) et `kit-claude` (`diagnostic`, `ajouter-cle`, `mise-a-jour`, `test`, `desinstaller`).
+- **Un raccourci « Claude Gratuit » sur le Bureau** (Windows, Mac) : double-clic = Claude ouvert dans ton dossier de projets.
+- **2 commandes** : `claude-gratuit` (Claude via OmniRoute) et `kit-claude` (`diagnostic`, `ajouter-cle`, `bascule`, `demarrer`, `mot-de-passe`, `cle`, `connecter-serveur`, `mise-a-jour`, `test`, `desinstaller`).
 - **Sécurité par défaut** : OmniRoute n'écoute que ton ordi (127.0.0.1) et exige une clé.
 - En option : le kit **Stories à la une** et le kit **SYSTEM** (élèves SYSTEM).
 
@@ -89,7 +94,7 @@ flowchart LR
 | Tu vois | Fais |
 |---|---|
 | `claude` n'est pas reconnu | ferme et rouvre le terminal |
-| `ECONNREFUSED 127.0.0.1:20128` | `omniroute serve --no-open` |
+| `ECONNREFUSED 127.0.0.1:20128` | `kit-claude demarrer` |
 | `429` / quota | attends 1 min, ou `kit-claude ajouter-cle` |
 | Claude se ferme au démarrage | flèche ↓ puis Entrée sur « Yes, I trust this folder » |
 | « Do you want to proceed? » | `1` ou `2` (jamais `3`, le mode auto ne marche pas avec OmniRoute) |

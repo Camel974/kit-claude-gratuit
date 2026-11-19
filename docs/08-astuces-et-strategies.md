@@ -1,16 +1,18 @@
 # 08 · Astuces et stratégies (aller plus vite, plus loin, toujours gratuit)
 
 ## 1. Le combo gagnant si tu as 20 €/mois
-**Claude Pro en principal + le kit en secours.** À l'installation, réponds « oui » à la question de l'abonnement :
-- `claude` → ton abonnement (vrais modèles Claude, la meilleure qualité),
-- `claude-gratuit` → OmniRoute et les modèles gratuits, quand tu atteins la limite de ton abonnement ou pour les tâches simples (renommer, traduire, petites pages).
+**Claude Pro en principal + le kit en secours.** À l'installation, réponds « o » à la question de l'abonnement :
+- `claude` → ton abonnement (vrais modèles Claude, la meilleure qualité), **jamais modifié par le kit**,
+- `claude-gratuit` → OmniRoute et les modèles gratuits, dans un profil séparé (`~/.claude-gratuit`), quand tu atteins la limite ou pour les tâches simples (renommer, traduire, petites pages).
+- Limite atteinte : `/exit` puis `claude-gratuit -c` → la même conversation continue en gratuit.
+- Ne fais jamais `/logout` dans `claude-gratuit` (ça déconnecterait l'abonnement).
 Résultat : tu ne paies jamais plus de 20 € et tu n'es jamais bloqué.
 
 ## 2. Claude.ai gratuit comme coach (sans rien installer)
 La version gratuite de claude.ai ne peut pas travailler dans tes fichiers, mais elle peut te guider. Envoie-lui le fichier [GUIDE-POUR-CLAUDE.md](../GUIDE-POUR-CLAUDE.md) avec le texte de [PROMPT-POUR-CLAUDE-GRATUIT.txt](../PROMPT-POUR-CLAUDE-GRATUIT.txt) : elle te pose les bonnes questions et te donne une étape à la fois, adaptée à ton ordi.
 
 ## 3. Un serveur pour toute la famille de tes appareils
-OmniRoute + Claude Code sur un petit VPS ([03](03-installation-serveur.md)) : tu travailles depuis ton PC fixe, ton portable, ou même ton téléphone (app SSH type Termius) sur les mêmes projets. Les agents continuent pendant que ton PC est éteint.
+OmniRoute + Claude Code sur un petit VPS ([03](03-installation-serveur.md)) : tu travailles depuis ton PC fixe, ton portable, ou même ton téléphone (app SSH type Termius) sur les mêmes projets. Avec **tmux** (`tmux new -A -s claude`), Claude continue même si tu fermes ton PC ou si la connexion coupe.
 
 ## 4. Travailler depuis le téléphone
 - App SSH (Termius, Blink) → `ssh root@ton-serveur` → `cd Projets-Claude && claude`.
@@ -30,7 +32,7 @@ Installe VS Code (gratuit) + l'extension officielle **Claude Code**. Elle utilis
 | Code, site, appli | la combinaison par défaut `gratuit` (Mistral d'abord) |
 | Lire un très gros document / un gros projet | `claude --model gemini/gemini-2.5-flash` (contexte d'un million de tokens) |
 | Réponses instantanées, petites tâches | `claude --model groq/openai/gpt-oss-120b` |
-Les identifiants exacts sont dans le tableau de bord (Fournisseurs → ton fournisseur → modèles).
+Les identifiants exacts sont dans le tableau de bord (Fournisseurs → ton fournisseur → modèles). Abonné Claude : remplace `claude` par `claude-gratuit` dans ces commandes.
 
 ## 8. Créer tes propres skills
 Tu refais souvent la même chose ? Dis : « crée-moi un skill qui fait [X] » (skill `skill-creator`). Il sera disponible dans toutes tes conversations.

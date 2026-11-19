@@ -82,25 +82,37 @@ fi
 NODE_BIN="$(dirname "$NODE")"
 export PATH="$NODE_BIN:$HOME/.local/bin:$PATH"
 
-# ---------- 3. Claude Code (installeur officiel d'Anthropic, dans ~/.local/bin)
-if command -v claude >/dev/null 2>&1 || [ -x "$HOME/.local/bin/claude" ]; then
-  ok "Claude Code deja installe"
-else
-  info "Installation de Claude Code (officiel, ~1 minute)..."
-  curl -fsSL https://claude.ai/install.sh | bash || stop "Installation de Claude Code echouee. Relance ce script dans 5 minutes."
-fi
-
-# ---------- 4. Petit serveur : memoire d'echange (seulement si root, Linux, moins de 3 Go et pas de swap)
+# ---------- 3. Petit serveur : memoire d'echange AVANT les installations (seulement si root, Linux, < 3 Go, pas de swap)
 if [ "$(uname -s)" = Linux ] && [ "$(id -u)" = 0 ] && [ -r /proc/meminfo ]; then
   ram_mo=$(( $(grep MemTotal /proc/meminfo | tr -s ' ' | cut -d' ' -f2) / 1024 ))
   swap_mo=$(( $(grep SwapTotal /proc/meminfo | tr -s ' ' | cut -d' ' -f2) / 1024 ))
   if [ "$ram_mo" -lt 3000 ] && [ "$swap_mo" -lt 512 ] && [ ! -e /swapfile ]; then
     info "Serveur a ${ram_mo} Mo de RAM : ajout de 2 Go de memoire d'echange (evite les plantages d'OmniRoute)..."
     if fallocate -l 2G /swapfile 2>/dev/null || dd if=/dev/zero of=/swapfile bs=1M count=2048 status=none; then
-      chmod 600 /swapfile && mkswap /swapfile >/dev/null && swapon /swapfile \
-        && { grep -q '^/swapfile' /etc/fstab || echo '/swapfile none swap sw 0 0' >> /etc/fstab; } && ok "Swap de 2 Go active"
+      if chmod 600 /swapfile && mkswap /swapfile >/dev/null && swapon /swapfile; then
+        grep -q '^/swapfile' /etc/fstab || echo '/swapfile none swap sw 0 0' >> /etc/fstab
+        ok "Swap de 2 Go active"
+      else
+        rm -f /swapfile; info "Swap impossible sur ce serveur (pas grave si tu as 2 Go de RAM libres)."
+      fi
     fi
   fi
+fi
+
+# Serveur : tmux garde Claude en vie si la connexion SSH coupe.
+case " $* " in *" --serveur "*)
+  if [ "$(id -u)" = 0 ] && ! command -v tmux >/dev/null 2>&1 && command -v apt-get >/dev/null 2>&1; then
+    info "Installation de tmux (garde Claude ouvert si ta connexion SSH coupe)..."
+    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq tmux >/dev/null 2>&1 && ok "tmux installe" || info "tmux non installe (optionnel)."
+  fi ;;
+esac
+
+# ---------- 4. Claude Code (installeur officiel d'Anthropic, dans ~/.local/bin)
+if command -v claude >/dev/null 2>&1 || [ -x "$HOME/.local/bin/claude" ]; then
+  ok "Claude Code deja installe"
+else
+  info "Installation de Claude Code (officiel, ~1 minute)..."
+  curl -fsSL https://claude.ai/install.sh | bash || stop "Installation de Claude Code echouee. Relance ce script dans 5 minutes."
 fi
 
 # ---------- 5. La suite : questions, OmniRoute, cles, skills, test

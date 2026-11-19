@@ -12,6 +12,7 @@
 2. Le script installe ce qui manque, sans droits administrateur :
    - Node.js (dans ton dossier perso), Git pour Windows (optionnel, Windows peut demander une autorisation), Claude Code (installeur officiel), OmniRoute.
 3. Réponds aux questions (voir plus bas). Pour **coller** une clé dans la fenêtre noire : **clic droit**.
+   - « Installer Git pour Windows ? » : Entrée, puis **Oui** quand Windows demande l'autorisation (c'est la seule fois). Git donne à Claude un vrai terminal ; sans lui, Claude utilise PowerShell.
 4. Des lignes jaunes `npm warn ...` défilent pendant 2 minutes : **c'est normal**.
 5. Fin : `C'EST PRET !` → note le **mot de passe** du tableau de bord.
 
@@ -21,13 +22,13 @@ irm https://raw.githubusercontent.com/Camel974/kit-claude-gratuit/main/scripts/i
 ```
 
 ## Mac
-1. Dans le dossier dézippé : **clic droit sur `DEMARRER-MAC.command` → Ouvrir → Ouvrir** (le double-clic simple est bloqué par macOS la première fois).
-2. Pour coller une clé : **Cmd + V**.
-
-Sans dézipper : ouvre l'app **Terminal** (Cmd + Espace → « Terminal ») et colle
+Le plus simple (aucun blocage de macOS) : ouvre l'app **Terminal** (Cmd + Espace → « Terminal ») et colle
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Camel974/kit-claude-gratuit/main/installer.sh | bash
 ```
+Pour coller une clé : **Cmd + V**.
+
+Avec le zip : double-clic sur `DEMARRER-MAC.command`. Si macOS refuse (« développeur non vérifié ») : **Réglages Système → Confidentialité et sécurité → « Ouvrir quand même »** (macOS 15 Sequoia ; avant : clic droit → Ouvrir). Si le Terminal demande l'accès au dossier Téléchargements : **Autoriser**.
 
 ## Linux (PC)
 ```bash
@@ -38,7 +39,7 @@ bash installer.sh
 | Question | Réponse conseillée |
 |---|---|
 | Où installes-tu ? | 1 (ce PC) ; 2 si tu es connecté en SSH à un serveur |
-| As-tu un abonnement Claude payant (Pro ou Max) ? | **non** si tu n'en as pas → `claude` passe par le gratuit. **oui** → `claude` reste sur ton abonnement et `claude-gratuit` passe par le gratuit |
+| As-tu un abonnement Claude payant (Pro ou Max) ? | **non** (Entrée) si tu n'en as pas → `claude` passe par le gratuit. **o** si tu en as un → `claude` reste ton abonnement, intact, et `claude-gratuit` passe par le gratuit dans un profil séparé. Si tu es déjà connecté à Claude sur l'ordi, « oui » est proposé par défaut |
 | Mot de passe du tableau de bord | 8 caractères ou plus, ou Entrée pour qu'il en génère un (il l'affiche à la fin) |
 | Colle ta clé Mistral / NVIDIA / Gemini / Groq / OpenRouter | colle celles que tu as, Entrée pour passer les autres |
 | Installer le pack de skills ? | Oui (sites, applis, jeux, économie de tokens) |
@@ -50,9 +51,13 @@ Les questions :
 
 ![Les questions de l'installeur](images/06a-questions.png)
 
-Puis les 9 étapes. Ici, la clé Mistral était **volontairement fausse** pour vérifier que le kit le signale et que la bascule passe au fournisseur suivant (un fournisseur de test) : c'est ce qui s'est passé, et Claude Code a répondu en 2 secondes.
+Puis les 9 étapes. **Première installation sur une machine vierge** (ni Node, ni Claude Code) : 159 secondes au total. Ici la clé Mistral était **volontairement fausse** : le kit le voit tout de suite, explique pourquoi et dit quoi faire.
 
-![Les 9 étapes de l'installation](images/06-installation-terminal.png)
+![Première installation sur une machine vierge](images/06b-premiere-installation.png)
+
+Et une fois une clé valide en place, la bascule fait son travail. Ci-dessous une relance (10 secondes) : la clé Mistral est toujours fausse, OmniRoute bascule sur le fournisseur suivant (un fournisseur de test) et Claude Code répond en 2 secondes.
+
+![Relance avec bascule automatique](images/06-installation-terminal.png)
 
 Extrait (texte copiable) :
 ```
@@ -70,22 +75,22 @@ Extrait (texte copiable) :
   OK  Claude Code repond en 2 s
 C'EST PRET !
 ```
-Temps mesurés : première installation complète **~3 minutes** sur un serveur 4 cœurs avec une bonne connexion (dont 2 minutes pour OmniRoute), relance **10 secondes**. Compte 10 à 15 minutes sur un PC moyen avec les questions.
+Temps mesurés : première installation complète **159 secondes** sur un serveur 4 cœurs avec une bonne connexion (dont 2 minutes pour OmniRoute), relance **8 à 10 secondes**. Compte 10 à 15 minutes sur un PC moyen avec les questions.
 
 ## Après l'installation
-1. Ouvre un **nouveau** terminal (l'ancien ne connaît pas encore les nouvelles commandes).
-2. `cd Documents/Projets-Claude` puis `claude` (ou `claude-gratuit`).
+1. **Double-clic sur « Claude Gratuit »** sur ton Bureau : Claude s'ouvre dans ton dossier de projets.
+2. Ou à la main : ouvre un **nouveau** terminal (l'ancien ne connaît pas les nouvelles commandes), tape la ligne `cd "..."` affichée à la fin de l'installation, puis `claude` (ou `claude-gratuit`). Avec OneDrive, ton dossier Documents est souvent dans `OneDrive\Documents` : l'installeur le trouve tout seul et affiche le bon chemin.
 3. Tape `/bienvenue-gratuit`.
 
 ![Claude Code qui démarre directement, branché sur OmniRoute](images/07-claude-code.png)
 
 ## Ce que le kit a modifié (transparence)
-| Fichier | Changement | Retour arrière |
-|---|---|---|
-| `~/.claude/settings.json` | section `env` : adresse d'OmniRoute, clé, modèle `gratuit` (sauf si tu as un abonnement) | `kit-claude desinstaller` |
-| `~/.claude.json` | saute l'écran d'accueil, autorise `Documents/Projets-Claude` | idem |
-| `~/.claude/CLAUDE.md` | un bloc « Mode Claude Gratuit » entre 2 marqueurs (le reste est intact) | idem |
-| `~/.claude/skills/` | les skills du kit (les tiens sont gardés) | idem |
-| `~/.omniroute/.env` | `OMNIROUTE_SERVER_HOST=127.0.0.1`, `REQUIRE_API_KEY=true` | à la main |
-| `~/.local/bin/` | commandes `claude-gratuit` et `kit-claude` | `kit-claude desinstaller` |
-Chaque fichier modifié est d'abord copié dans `~/.claude/backups/kit-claude-gratuit-<date>/`.
+| Fichier | Sans abonnement (mode gratuit) | Avec abonnement Claude | Retour arrière |
+|---|---|---|---|
+| Réglages Claude Code | `~/.claude/settings.json` : section `env` (OmniRoute, clé, modèle `gratuit`) + `permissions.defaultMode: manual` | rien dans `~/.claude` ; tout va dans le profil séparé `~/.claude-gratuit/` | `kit-claude desinstaller` |
+| Écran d'accueil, confiance du dossier | `~/.claude.json` (accueil vu, dossier Projets-Claude autorisé) | `~/.claude-gratuit/.claude.json` | laissés tels quels (sans effet ailleurs) |
+| Règles | bloc « Mode Claude Gratuit » dans `~/.claude/CLAUDE.md` (le reste intact) | `~/.claude-gratuit/CLAUDE.md` | `kit-claude desinstaller` |
+| Skills | `~/.claude/skills/` (les tiens sont gardés) | `~/.claude-gratuit/skills/` | `kit-claude desinstaller` |
+| OmniRoute | `~/.omniroute/.env` : `OMNIROUTE_SERVER_HOST=127.0.0.1`, `REQUIRE_API_KEY=true` | idem | à la main |
+| Commandes | `claude-gratuit`, `kit-claude` dans `~/.local/bin` + raccourci Bureau | idem | `kit-claude desinstaller` |
+Chaque fichier modifié est d'abord copié dans `~/.claude/backups/kit-claude-gratuit-<date>/`. Une copie du kit est gardée dans `~/.kit-claude-gratuit/kit` (Windows : `%LOCALAPPDATA%\kit-claude-gratuit\kit`) : tu peux supprimer le zip téléchargé.

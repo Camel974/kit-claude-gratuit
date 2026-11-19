@@ -14,7 +14,7 @@ C'EST QUOI ?
   au suivant (testé).
 
 CE QU'IL TE FAUT
-- Un PC Windows 10/11, un Mac, ou un serveur Linux (VPS, NAS).
+- Un PC Windows 10/11 ou un Mac (ou un serveur Linux si tu en as déjà un).
   2 Go de RAM libres et 2 Go de disque.
 - Internet.
 - Au moins 1 clé gratuite (étape 1). La meilleure : Mistral.
@@ -46,81 +46,101 @@ CE QU'IL TE FAUT
  avec la commande  kit-claude ajouter-cle
 
 --------------------------------------------------------------------------
-ÉTAPE 2 : INSTALLE  (choisis TON cas)
+ÉTAPE 2 : INSTALLE
 --------------------------------------------------------------------------
- TU AS UN SERVEUR (VPS, NAS Linux) : c'est le meilleur choix, il tourne
+ Tu as DÉJÀ un serveur (VPS, NAS) ? Va à la partie SERVEUR plus bas :
+ c'est le meilleur choix. Pas de serveur (la plupart des gens) ? Pas
+ besoin d'en louer un : WINDOWS ou MAC ci-dessous.
+
+ WINDOWS
+    1. Double-clique sur  DEMARRER-WINDOWS.bat
+       Si Windows dit « Windows a protégé votre ordinateur » :
+       « Informations complémentaires » > « Exécuter quand même ».
+    2. Réponds aux questions (Entrée = réponse recommandée) :
+       - « As-tu un abonnement Claude payant ? » : tape o si tu as Claude
+         Pro ou Max (ton Claude actuel ne sera pas touché), sinon Entrée.
+       - « Installer Git ? » : Entrée, puis « Oui » si Windows demande
+         l'autorisation (c'est la seule fois).
+       - Tes clés : clic droit dans la fenêtre noire pour coller.
+         (Normal : la clé s'affiche en étoiles.)
+    3. Des lignes jaunes ou en anglais défilent : normal, ne touche à rien.
+    4. NOTE LE MOT DE PASSE affiché (oublié ? kit-claude mot-de-passe).
+
+ MAC
+    1. Ouvre l'app Terminal (Cmd + Espace, tape « Terminal », Entrée).
+    2. Colle cette ligne (Cmd + V) puis Entrée :
+       curl -fsSL https://raw.githubusercontent.com/Camel974/kit-claude-gratuit/main/installer.sh | bash
+       (Ou double-clic sur DEMARRER-MAC.command. Si macOS le bloque :
+        Réglages Système > Confidentialité et sécurité > « Ouvrir quand
+        même ». Si le Terminal demande l'accès à Téléchargements :
+        « Autoriser ».)
+    3. Mêmes questions que sur Windows. Pour coller une clé : Cmd + V.
+    4. NOTE LE MOT DE PASSE affiché.
+
+ SERVEUR (VPS, NAS Linux) : prioritaire si tu en as un, il tourne
  24 h/24 et tu y accèdes depuis n'importe quel ordi.
     1. Connecte-toi :  ssh root@ADRESSE-IP-DU-SERVEUR
     2. Colle cette ligne puis Entrée :
        curl -fsSL https://raw.githubusercontent.com/Camel974/kit-claude-gratuit/main/installer.sh | bash -s -- --serveur
     3. Réponds aux questions. Guide détaillé : docs/03-installation-serveur.md
 
- WINDOWS
-    1. Double-clique sur  DEMARRER-WINDOWS.bat
-       Si Windows dit « Windows a protégé votre ordinateur » :
-       « Informations complémentaires » > « Exécuter quand même ».
-    2. Réponds aux questions (Entrée = réponse recommandée).
-       Pour coller une clé : clic droit dans la fenêtre noire.
-       (Normal : la clé s'affiche en étoiles.)
-    3. Attends la fin et NOTE LE MOT DE PASSE affiché.
+ LINUX (PC) : bash installer.sh   (dans ce dossier)
 
- MAC
-    1. Clic droit sur  DEMARRER-MAC.command  > « Ouvrir » > « Ouvrir ».
-       (Ou ouvre l'app Terminal et colle :
-        bash ~/Downloads/kit-claude-gratuit-main/installer.sh )
-    2. Réponds aux questions. Pour coller : Cmd + V.
-    3. Attends la fin et NOTE LE MOT DE PASSE affiché.
-
- LINUX (PC)
-    bash installer.sh   (dans ce dossier)
-
- EN UNE SEULE LIGNE, SANS DÉZIPPER
-    Windows (PowerShell) :
-      irm https://raw.githubusercontent.com/Camel974/kit-claude-gratuit/main/scripts/installer-windows.ps1 | iex
-    Mac / Linux (Terminal) :
-      curl -fsSL https://raw.githubusercontent.com/Camel974/kit-claude-gratuit/main/installer.sh | bash
+ WINDOWS EN UNE LIGNE, SANS DÉZIPPER (PowerShell) :
+   irm https://raw.githubusercontent.com/Camel974/kit-claude-gratuit/main/scripts/installer-windows.ps1 | iex
 
 --------------------------------------------------------------------------
 ÉTAPE 3 : UTILISE CLAUDE
 --------------------------------------------------------------------------
- 1. Ouvre un NOUVEAU terminal :
-      Windows : touche Windows, tape « PowerShell », Entrée.
-      Mac     : Cmd + Espace, tape « Terminal », Entrée.
-      Serveur : ssh root@ADRESSE-IP-DU-SERVEUR
- 2. Tape :  cd Documents/Projets-Claude      puis Entrée
-    (sur un serveur sans dossier Documents : cd Projets-Claude)
- 3. Tape :  claude                           puis Entrée
-    (Tu as un abonnement Claude payant ? Tape  claude-gratuit  pour la
-     version gratuite : « claude » reste sur ton abonnement.)
- 4. Premier lancement : tape  /bienvenue-gratuit  (5 minutes de questions
-    pour que Claude te connaisse et te propose ton premier projet).
- 5. Ensuite, écris normalement :
-      « crée-moi un site pour mon activité de coach »
+ LE PLUS SIMPLE : double-clic sur « Claude Gratuit » sur ton Bureau.
+ Claude s'ouvre directement dans ton dossier de projets.
+
+ Sinon, à la main :
+ 1. Ouvre un NOUVEAU terminal (Windows : touche Windows, tape
+    « PowerShell » ; Mac : Terminal ; serveur : ssh root@ADRESSE-IP).
+ 2. Tape la ligne « cd ... » affichée à la fin de l'installation
+    (ton dossier Projets-Claude), puis Entrée.
+ 3. Tape  claude  puis Entrée
+    (abonnement Claude payant : tape  claude-gratuit  pour le gratuit ;
+     « claude » reste sur ton abonnement.)
+
+ Premier lancement : tape  /bienvenue-gratuit  (8 questions à boutons,
+ 5 minutes) : Claude apprend ce que tu veux faire et te propose ton
+ premier projet. Ensuite, écris normalement, par exemple :
       « fais-moi un jeu de voiture jouable sur téléphone »
-      « crée une appli pour suivre mes clients »
+      « écris un script qui renomme mes photos avec leur date »
+      « crée-moi une page simple pour m'entraîner au web »
+ À savoir : les skills Site et Appli de Brennan commencent par te
+ demander ton chiffre d'affaires (règle : le site, c'est après
+ 3 000 €/mois, sauf pour un client qui paie).
 
- Si Claude demande « Do you trust the files in this folder? » :
- flèche du BAS puis Entrée sur « Yes, I trust this folder ».
- (Entrée tout de suite = « No, exit » et Claude se ferme. Vu en test.)
+ Les 3 écrans à connaître :
+ - « Do you trust the files in this folder? » : flèche du BAS puis
+   Entrée sur « Yes, I trust this folder ». (Entrée tout de suite =
+   « No, exit » et Claude se ferme. Vu en test.)
+ - « Do you want to proceed? » (avant une commande ou une modification) :
+   tape 1 (oui) ou 2 (oui, et ne plus demander pour ce type d'action).
+   En mode gratuit, jamais 3 (« auto mode ») : il ne marche pas avec
+   OmniRoute (vu en test).
+ - En haut, « gratuit · API Usage Billing » : normal, tu ne paies rien.
 
- Avant une action (commande, modification), Claude demande
- « Do you want to proceed? » : tape 1 (oui) ou 2 (oui, et ne plus
- demander pour ce type d'action). Jamais 3 (« auto mode ») : le mode
- auto ne marche pas avec OmniRoute (vu en test).
- En haut, « gratuit · API Usage Billing » : normal, tu ne paies rien.
+ Tu as un abonnement Claude ? Limite atteinte : tape /exit, puis
+ claude-gratuit -c  (reprend la même conversation en gratuit).
+ Si claude-gratuit te parle de « /logout » : ne le fais JAMAIS (ça
+ déconnecterait ton abonnement).
 
 --------------------------------------------------------------------------
 SI ÇA BLOQUE
 --------------------------------------------------------------------------
  1. Dans un terminal, tape :  kit-claude diagnostic
- 2. Copie le rapport sur https://claude.ai (même la version gratuite)
-    avec la phrase du fichier PROMPT-POUR-CLAUDE-GRATUIT.txt
+    Le rapport s'ouvre dans le Bloc-notes : Ctrl+A puis Ctrl+C.
+ 2. Colle-le sur https://claude.ai (même la version gratuite) avec la
+    phrase du fichier PROMPT-POUR-CLAUDE-GRATUIT.txt
  3. Toutes les solutions : docs/07-depannage.md
 
  Les 3 problèmes les plus fréquents :
   - « claude n'est pas reconnu » : ferme et rouvre le terminal.
-  - « ECONNREFUSED » : OmniRoute est éteint. Tape :
-        omniroute serve --no-open      (et laisse cette fenêtre ouverte)
+  - « ECONNREFUSED » : OmniRoute est éteint. Tape :  kit-claude demarrer
   - « 429 » ou « quota » : le quota gratuit du moment est épuisé.
     Attends 1 minute, ou ajoute une clé :  kit-claude ajouter-cle
 
@@ -128,11 +148,14 @@ SI ÇA BLOQUE
 LES COMMANDES À CONNAÎTRE
 --------------------------------------------------------------------------
  claude                    lancer Claude Code (dans le dossier du projet)
+ claude-gratuit            idem en mode gratuit (si tu as un abonnement)
  /bienvenue-gratuit        régler Claude sur toi (une fois)
  /compact                  résumer la conversation (économise le quota)
  /clear                    repartir de zéro (nouveau sujet)
  kit-claude ajouter-cle    ajouter une clé gratuite
  kit-claude bascule        remettre à jour l'ordre de bascule des modèles
+ kit-claude demarrer       relancer OmniRoute
+ kit-claude mot-de-passe   nouveau mot de passe du tableau de bord
  kit-claude diagnostic     trouver la panne
  kit-claude mise-a-jour    tout mettre à jour (kit, OmniRoute, Claude)
  Tableau de bord OmniRoute : http://127.0.0.1:20128
@@ -158,6 +181,6 @@ LES COMMANDES À CONNAÎTRE
 ==========================================================================
  Kit créé par Brennan SONNET · Instagram @brennansonnet_974
  Gratuit, interdit à la revente. Version 1.0, testée le 18/11/2026
- (Claude Code 2.1.327, OmniRoute 3.8.54, Node.js 24).
+ (Claude Code 2.1.327, OmniRoute 3.8.54, Node.js 26).
  Mises à jour : https://github.com/Camel974/kit-claude-gratuit
 ==========================================================================
