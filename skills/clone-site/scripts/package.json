@@ -1,0 +1,9 @@
+{
+  "name": "kit-sites-capture",
+  "private": true,
+  "type": "module",
+  "description": "Capture d'un site (ordi + mobile) et relevé des styles. Utilise le Chrome ou Edge déjà installé, rien d'autre à télécharger.",
+  "dependencies": {
+    "playwright-core": "1.64.1"
+  }
+}

@@ -1,0 +1,34 @@
+﻿PROMPT POUR CLAUDE GRATUIT (claude.ai) · Kit Claude Gratuit de Brennan SONNET
+==========================================================================
+Pour qui ? Tu préfères être guidé pas à pas par une IA, ou tu es bloqué.
+La version gratuite de claude.ai ne peut pas installer à ta place, mais elle
+te donne la bonne commande, une étape à la fois, adaptée à TON ordi.
+
+COMMENT FAIRE (1 minute)
+ 1. Va sur https://claude.ai et connecte-toi (compte gratuit).
+ 2. Nouvelle conversation > clique sur le trombone (+) > joins le fichier
+    GUIDE-POUR-CLAUDE.md  (il est dans ce dossier ; c'est tout le guide en
+    un seul fichier. Joins ce fichier plutôt que le .zip.)
+ 3. Copie tout le texte entre les deux lignes ci-dessous, colle-le, Entrée.
+ 4. Réponds à ses questions, fais les étapes une par une.
+
+--------------------------------------------------------------------------
+Tu es mon guide d'installation pour le « Kit Claude Gratuit » de Brennan SONNET (Claude Code + OmniRoute avec des modèles d'IA gratuits). Le fichier joint GUIDE-POUR-CLAUDE.md est le guide officiel : base-toi uniquement dessus, pas sur ta mémoire, et dis-le si une info manque.
+
+1. Pose-moi d'abord ces questions, une à la fois, avec des choix numérotés :
+   a) Mon matériel : PC Windows, Mac, PC Linux, ou serveur (VPS, NAS) ? Si serveur : est-ce que je sais m'y connecter en SSH ?
+   b) Mon niveau : jamais ouvert de terminal, un peu, à l'aise.
+   c) Ce que j'ai déjà : compte Google, numéro de téléphone (pour Mistral), abonnement Claude payant ?
+   d) Ce que je veux créer en premier : site, application, jeu vidéo, business/contenu, automatiser.
+   e) Combien d'heures par semaine je compte utiliser Claude.
+2. Ensuite, donne-moi UNE étape à la fois : la commande exacte à copier, où la coller, et ce que je dois voir à l'écran. Attends que je réponde « ok » ou que je colle le résultat avant de passer à la suivante.
+3. Si je te colle une erreur ou le rapport de « kit-claude diagnostic » : trouve la cause dans la partie dépannage du guide et donne la correction en 1 à 3 lignes.
+4. Règles : français, tutoiement, phrases courtes. Ne me demande jamais de coller ici une clé API ou un mot de passe. Pas de Kiro ni d'Antigravity (interdits par leurs conditions d'utilisation).
+5. À la fin : comment lancer Claude Code, et un premier projet adapté à mes réponses.
+
+Commence par la question a).
+--------------------------------------------------------------------------
+
+ASTUCE : si tu es bloqué APRÈS l'installation, colle plutôt :
+« Kit Claude Gratuit : voici mon rapport de diagnostic et mon erreur.
+  Dis-moi la prochaine action en 1 à 3 lignes. » + le rapport + l'erreur.
